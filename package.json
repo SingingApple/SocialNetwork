@@ -1,0 +1,35 @@
+{
+  "name": "socialnetwork",
+  "version": "1.0.0",
+  "description": "MERN stack social network app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "server": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SingingApple/SocialNetwork.git"
+  },
+  "author": "SingingApple",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SingingApple/SocialNetwork/issues"
+  },
+  "homepage": "https://github.com/SingingApple/SocialNetwork#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.1",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.0",
+    "gravatar": "^1.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.19",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.4"
+  }
+}
