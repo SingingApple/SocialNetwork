@@ -9,6 +9,9 @@ const profileRoutes = require("./routes/api/profile");
 
 const app = express();
 
+//middlewares
+app.use(express.json({ extended: false }));
+
 //connect database
 connectDB();
 app.get("/", (req, res) => {
