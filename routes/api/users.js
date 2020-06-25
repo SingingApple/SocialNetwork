@@ -59,6 +59,7 @@ router.post(
           id: user.id,
         },
       };
+      //JSONwebToken
       jwt.sign(
         payload,
         config.get("jwtToken"),
