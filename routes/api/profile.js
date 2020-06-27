@@ -124,4 +124,42 @@ router.post(
   }
 );
 
+//@route GET api/profile
+//@desc Get all profiles
+//@access Public
+router.get("/", async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate("user", ["name", "avatar"]);
+    res.json(profiles);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+//@route Get api/profile/user/:user_id
+//@desc get profile by user_id
+//@access public
+router.get("/user/:user_id", async (req, res) => {
+  try {
+    const profile = await Profile.find({
+      user: req.params.user_id,
+    }).populate("user", ["name", "avatar"]);
+    if (!profile) {
+      res.status(400).json({ msg: "No profile exists for this user" });
+    }
+    res.json(profile);
+  } catch (error) {
+    if (error.kind === "ObjectId") {
+      res.status(400).json({ msg: "No profile exists for this user" });
+    }
+    console.log(error.message);
+    res.send("Server Error");
+  }
+});
+
+//@route Get api/profile/user/:user_id
+//@desc get profile by user_id
+//@access public
+
 module.exports = router;
