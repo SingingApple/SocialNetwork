@@ -28,7 +28,7 @@ router.post(
       };
       const post = new Post(newPost);
       await post.save();
-      res.send(post);
+      res.json(post);
     } catch (error) {
       console.log(error.message);
       res.status(500).send("Server Error");
@@ -160,4 +160,73 @@ router.put("/unlike/:post_id", auth, async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
+//@route    POST api/posts/comment/:post_id
+//@desc     Comment on post
+//@access   private
+router.post(
+  "/comment/:post_id",
+  [auth, [check("text", "Text is required").not().isEmpty()]],
+  async (req, res) => {
+    const erorrs = validationResult(req);
+    if (!erorrs.isEmpty()) {
+      return res.status(400).json({
+        erorrs: erorrs.array(),
+      });
+    }
+    try {
+      const user = await User.findById(req.user.id).select("-password");
+      const post = await Post.findById(req.params.post_id);
+      const newComment = {
+        text: req.body.text,
+        name: user.name,
+        avatar: user.avatar,
+        user: req.user.id,
+      };
+      post.comments.unshift(newComment);
+      await post.save();
+      res.json(post.comments);
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
+
+//@route api/posts/comment/:post_id/:comment_id
+//@desc Delete comment from a post
+//@access private
+router.delete("/comment/:post_id/:comment_id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.post_id);
+    const comment = post.comments.find(
+      (comment) => comment.id.toString() === req.params.comment_id
+    );
+    if (!comment) {
+      return res.status(404).json({
+        msg: "Comment not found",
+      });
+    }
+    if (comment.user.toString() !== req.user.id) {
+      return res.status(400).json({
+        msg: "User not authorized",
+      });
+    }
+
+    const removeIndex = post.comments
+      .map((comment) => comment.id.toString())
+      .indexOf(req.params.comment_id);
+    post.comments.splice(removeIndex, 1);
+    await post.save();
+    res.json(post);
+  } catch (error) {
+    if (error.kind === "ObjectId") {
+      return res.status(404).json({
+        msg: "Comment not found",
+      });
+    }
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;
