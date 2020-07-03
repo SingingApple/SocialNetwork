@@ -1,6 +1,20 @@
 import React from "react";
+import { logout } from "../../actions/auth";
 import { NavLink } from "react-router-dom";
 export const Navbar = () => {
+  const authLinks = (
+    <ul>
+      <li>
+        <a href="!#">Developers</a>
+      </li>
+      <li>
+        <NavLink to="/register">Register</NavLink>
+      </li>
+      <li>
+        <NavLink to="/login">Login</NavLink>
+      </li>
+    </ul>
+  );
   return (
     <nav className="navbar bg-dark">
       <h1>
