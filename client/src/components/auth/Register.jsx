@@ -1,9 +1,10 @@
 import React, { useState, Fragment } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
 import { setAlert } from "../../actions/alert";
 import { register } from "../../actions/auth";
 const Register = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: "",
@@ -17,6 +18,10 @@ const Register = () => {
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard"></Redirect>;
+  }
 
   const onSubmit = async (e) => {
     e.preventDefault();
