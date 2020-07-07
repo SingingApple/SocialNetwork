@@ -16,6 +16,9 @@ export const Navbar = () => {
           <span className="hide-sm">Logout</span>
         </a>
       </li>
+      <li>
+        <NavLink to="/dashboard">Dashboard</NavLink>
+      </li>
     </ul>
   );
   const guestLinks = (
