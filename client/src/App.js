@@ -9,7 +9,8 @@ import Alert from "./components/layout/Alert";
 import { loadUser } from "./actions/auth";
 import store from "./store";
 import setAuthToken from "./util/setAuthToken";
-
+import Dashboard from "./components/dashboard/Dashboard";
+import PrivateRoute from "./components/routing/PrivateRoute";
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -28,6 +29,11 @@ const App = () => {
           <Switch>
             <Route path="/register" exact component={Register}></Route>
             <Route path="/login" exact component={Login}></Route>
+            <PrivateRoute
+              path="/dashboard"
+              exact
+              component={Dashboard}
+            ></PrivateRoute>
           </Switch>
         </section>
       </React.Fragment>

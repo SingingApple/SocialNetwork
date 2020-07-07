@@ -1,12 +1,25 @@
-import React from "react";
-import { logout } from "../../actions/auth";
+import React, { Fragment } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import { NavLink } from "react-router-dom";
+
+import { logout } from "../../actions/auth";
 export const Navbar = () => {
+  const { isAuthenticated, loading } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+
   const authLinks = (
     <ul>
       <li>
-        <a href="!#">Developers</a>
+        <a onClick={() => dispatch(logout())} href="#!">
+          <span className="hide-sm">Logout</span>
+        </a>
       </li>
+    </ul>
+  );
+  const guestLinks = (
+    <ul>
       <li>
         <NavLink to="/register">Register</NavLink>
       </li>
@@ -22,17 +35,9 @@ export const Navbar = () => {
           <i className="fas fa-code"></i> DevConnector
         </NavLink>
       </h1>
-      <ul>
-        <li>
-          <NavLink to="/!">Developers</NavLink>
-        </li>
-        <li>
-          <NavLink to="/register">Register</NavLink>
-        </li>
-        <li>
-          <NavLink to="/login">Login</NavLink>
-        </li>
-      </ul>
+      {!loading && (
+        <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+      )}
     </nav>
   );
 };

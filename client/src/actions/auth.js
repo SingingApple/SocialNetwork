@@ -77,8 +77,4 @@ export const register = ({ name, email, password }) => async (dispatch) => {
     dispatch({ type: REGISTER_FAIL });
   }
 };
-
-//Logout / Clear Profile
-export const logout = () => (dispatch) => {
-  dispatch({ type: LOGOUT });
-};
+export const logout = () => ({ type: LOGOUT });
