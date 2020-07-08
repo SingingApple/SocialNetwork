@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCurrentProfile } from "../../actions/profile";
 import Spinner from "../layout/Spinner";
 import DashboardActions from "./DashboardActions";
+import Experience from "./Experience";
+import Education from "./Education";
 const Dashboard = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -21,6 +23,8 @@ const Dashboard = () => {
       {profile.profile !== null ? (
         <Fragment>
           <DashboardActions></DashboardActions>
+          <Experience experience={profile.profile.experience}></Experience>
+          <Education education={profile.profile.education}></Education>
         </Fragment>
       ) : (
         <Fragment>
