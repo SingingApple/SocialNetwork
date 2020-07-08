@@ -1,7 +1,9 @@
 import React, { useState, Fragment } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-const CreateProfile = () => {
+import { useDispatch, useSelector } from "react-redux";
+import { Link, withRouter } from "react-router-dom";
+import { createProfile } from "../../actions/profile";
+const CreateProfile = ({ history }) => {
+  const dispatch = useDispatch();
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
   const [formData, setFormData] = useState({
     company: "",
@@ -32,9 +34,13 @@ const CreateProfile = () => {
     instagram,
   } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(createProfile(formData, history));
+  };
   return (
     <Fragment>
       <h1 className="large text-primary">Edit Your Profile</h1>
@@ -42,7 +48,7 @@ const CreateProfile = () => {
         <i className="fas fa-user" /> Add some changes to your profile
       </p>
       <small>* = required field</small>
-      <form className="form">
+      <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <select name="status" value={status} onChange={onChange}>
             <option>* Select Professional Status</option>
@@ -208,4 +214,4 @@ const CreateProfile = () => {
     </Fragment>
   );
 };
-export default CreateProfile;
+export default withRouter(CreateProfile);
