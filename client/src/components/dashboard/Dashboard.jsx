@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentProfile } from "../../actions/profile";
 import Spinner from "../layout/Spinner";
-
+import DashboardActions from "./DashboardActions";
 const Dashboard = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -19,7 +19,9 @@ const Dashboard = () => {
         <i className="fas fa-user"></i> Welcome {auth.user && auth.user.name}
       </p>
       {profile.profile !== null ? (
-        <Fragment>has</Fragment>
+        <Fragment>
+          <DashboardActions></DashboardActions>
+        </Fragment>
       ) : (
         <Fragment>
           Click on the link below to create a profile <br />
