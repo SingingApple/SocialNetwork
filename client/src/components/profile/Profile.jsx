@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../layout/Spinner";
 import { getProfileById } from "../../actions/profile";
 import ProfileTop from "./ProfileTop";
+import ProfileAbout from "./ProfileAbout";
 
 const Profile = ({ match, history }) => {
   const profile = useSelector((state) => state.profile);
@@ -33,6 +34,7 @@ const Profile = ({ match, history }) => {
             )}
           <div className="profile-grid my-1">
             <ProfileTop profile={profile.profile}></ProfileTop>
+            <ProfileAbout profile={profile.profile}></ProfileAbout>
           </div>
         </Fragment>
       )}
