@@ -7,6 +7,7 @@ import ProfileTop from "./ProfileTop";
 import ProfileAbout from "./ProfileAbout";
 import ProfileExp from "./ProfileExp";
 import ProfileEdu from "./ProfileEdu";
+import ProfileGithub from "./ProfileGithub";
 
 const Profile = ({ match, history }) => {
   const profile = useSelector((state) => state.profile);
@@ -58,9 +59,14 @@ const Profile = ({ match, history }) => {
                   ))}
                 </Fragment>
               ) : (
-                <h4>No Experience</h4>
+                <h4>No Education</h4>
               )}
             </div>
+            {profile.profile.githubusername && (
+              <ProfileGithub
+                username={profile.profile.githubusername}
+              ></ProfileGithub>
+            )}
           </div>
         </Fragment>
       )}
