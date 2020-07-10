@@ -7,6 +7,8 @@ import {
   UPDATE_PROFILE,
   CLEAR_PROFILE,
   ACCOUNT_DELETED,
+  GET_REPOS,
+  GET_PROFILES,
 } from "./types";
 
 //Get current user profile
@@ -29,6 +31,51 @@ export const getCurrentProfile = () => async (dispatch) => {
     });
   }
 };
+
+//Get profile by ID
+export const getProfileById = (id, history) => async (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get(`/api/profile/user/${id}`);
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (error) {
+    console.log(error.response);
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+    history.push("/dashboard");
+    dispatch(setAlert("No Profile found", "danger"));
+  }
+};
+
+//get all profile
+export const getAllProfiles = () => async (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get("/api/profile");
+    dispatch({
+      type: GET_PROFILES,
+      payload: res.data,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
 export const createProfile = (formData, history, edit = false) => async (
   dispatch
 ) => {
@@ -170,7 +217,7 @@ export const deleteEducation = (id) => async (dispatch) => {
 export const deleteAccount = () => async (dispatch) => {
   if (window.confirm("Are you sure? This cannot be undone.")) {
     try {
-      const res = await axios.delete(`/api/profile/`);
+      await axios.delete(`/api/profile/`);
       dispatch({
         type: CLEAR_PROFILE,
       });
@@ -187,5 +234,24 @@ export const deleteAccount = () => async (dispatch) => {
         },
       });
     }
+  }
+};
+
+//GET github repos
+export const getGithubRepos = (username) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/github/${username}`);
+    dispatch({
+      type: GET_REPOS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
   }
 };

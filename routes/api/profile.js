@@ -145,13 +145,14 @@ router.get("/", async (req, res) => {
 //@access public
 router.get("/user/:user_id", async (req, res) => {
   try {
-    const profile = await Profile.find({
+    const profile = await Profile.findOne({
       user: req.params.user_id,
     }).populate("user", ["name", "avatar"]);
     if (!profile) {
       res.status(400).json({ msg: "No profile exists for this user" });
     }
-    res.json(profile);
+
+    return res.status(200).json(profile);
   } catch (error) {
     if (error.kind === "ObjectId") {
       res.status(400).json({ msg: "No profile exists for this user" });

@@ -12,6 +12,9 @@ export const Navbar = () => {
   const authLinks = (
     <ul>
       <li>
+        <NavLink to="/profiles">Developers</NavLink>
+      </li>
+      <li>
         <a onClick={() => dispatch(logout())} href="#!">
           <span className="hide-sm">Logout</span>
         </a>
@@ -23,6 +26,9 @@ export const Navbar = () => {
   );
   const guestLinks = (
     <ul>
+      <li>
+        <NavLink to="/profiles">Developers</NavLink>
+      </li>
       <li>
         <NavLink to="/register">Register</NavLink>
       </li>

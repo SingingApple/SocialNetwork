@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import Moment from "react-moment";
 import { useDispatch } from "react-redux";
-import { deleteExperience, deleteEducation } from "../../actions/profile";
+import { deleteEducation } from "../../actions/profile";
 const Education = ({ education }) => {
   const dispatch = useDispatch();
   const educations = education.map((edu) => (
