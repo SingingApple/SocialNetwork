@@ -5,6 +5,8 @@ import Spinner from "../layout/Spinner";
 import { getProfileById } from "../../actions/profile";
 import ProfileTop from "./ProfileTop";
 import ProfileAbout from "./ProfileAbout";
+import ProfileExp from "./ProfileExp";
+import ProfileEdu from "./ProfileEdu";
 
 const Profile = ({ match, history }) => {
   const profile = useSelector((state) => state.profile);
@@ -35,6 +37,30 @@ const Profile = ({ match, history }) => {
           <div className="profile-grid my-1">
             <ProfileTop profile={profile.profile}></ProfileTop>
             <ProfileAbout profile={profile.profile}></ProfileAbout>
+            <div className="profile-exp bg-white-p-2">
+              <div className="text-primary">Experience</div>
+              {profile.profile.experience.length > 0 ? (
+                <Fragment>
+                  {profile.profile.experience.map((exp) => (
+                    <ProfileExp key={exp._id} experience={exp}></ProfileExp>
+                  ))}
+                </Fragment>
+              ) : (
+                <h4>No Experience</h4>
+              )}
+            </div>
+            <div className="profile-edu bg-white-p-4">
+              <div className="text-primary">Education</div>
+              {profile.profile.education.length > 0 ? (
+                <Fragment>
+                  {profile.profile.education.map((edu) => (
+                    <ProfileEdu key={edu._id} education={edu}></ProfileEdu>
+                  ))}
+                </Fragment>
+              ) : (
+                <h4>No Experience</h4>
+              )}
+            </div>
           </div>
         </Fragment>
       )}
