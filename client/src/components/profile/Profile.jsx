@@ -3,6 +3,7 @@ import { withRouter, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../layout/Spinner";
 import { getProfileById } from "../../actions/profile";
+import ProfileTop from "./ProfileTop";
 
 const Profile = ({ match, history }) => {
   const profile = useSelector((state) => state.profile);
@@ -13,7 +14,7 @@ const Profile = ({ match, history }) => {
       dispatch(getProfileById(match.params.id, history));
     }
     getProfilebyId();
-  }, [dispatch]);
+  }, [dispatch, match.params.id, history]);
   return (
     <Fragment>
       {profile.profile === null || profile.loading ? (
@@ -30,6 +31,9 @@ const Profile = ({ match, history }) => {
                 Edit
               </Link>
             )}
+          <div className="profile-grid my-1">
+            <ProfileTop profile={profile.profile}></ProfileTop>
+          </div>
         </Fragment>
       )}
     </Fragment>
