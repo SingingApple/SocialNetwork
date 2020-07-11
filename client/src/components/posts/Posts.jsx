@@ -4,6 +4,7 @@ import { getPosts } from "../../actions/post";
 import Spinner from "../layout/Spinner";
 
 import PostItem from "./PostItem";
+import PostForm from "./PostForm";
 
 const Posts = () => {
   const storePost = useSelector((state) => state.post);
@@ -23,7 +24,7 @@ const Posts = () => {
       <p className="lead">
         <i className="fas fa-user"></i>Welcome to the community
       </p>
-      {/* POST FORM*/}
+      <PostForm></PostForm>
       {posts.map((post) => (
         <PostItem key={post._id} post={post}></PostItem>
       ))}
