@@ -1,4 +1,4 @@
-import { POST_ERROR, GET_POSTS } from "../actions/types";
+import { POST_ERROR, GET_POSTS, UPDATE_LIKES } from "../actions/types";
 
 const initialState = {
   posts: [],
@@ -23,7 +23,16 @@ const postReducer = (state = initialState, action) => {
         error: payload,
         loading: false,
       };
-
+    case UPDATE_LIKES:
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id.toString() === payload.postId.toString()
+            ? { ...post, likes: payload.likes }
+            : post
+        ),
+        loading: false,
+      };
     default:
       return {
         ...state,

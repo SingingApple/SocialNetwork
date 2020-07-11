@@ -139,17 +139,20 @@ router.put("/unlike/:post_id", auth, async (req, res) => {
     const post = await Post.findById(req.params.post_id);
 
     if (
-      post.likes.filter((like) => like.user.toString() === req.user.id)
-        .length === 0
+      post.likes.filter(
+        (like) => like.user.toString() === req.user.id.toString()
+      ).length === 0
     ) {
-      return res.status(400).json({ msg: "You haven't liked this post yet" });
+      return res
+        .status(400)
+        .json({ errors: [{ msg: "You haven't liked this post yet" }] });
     }
     const removeIndex = post.likes
       .map((like) => like.user.toString())
       .indexOf(req.user.id);
     post.likes.splice(removeIndex, 1);
     await post.save();
-    res.json(post);
+    res.json(post.likes);
   } catch (error) {
     console.log(error.message);
     if (error.kind === "ObjectId") {
