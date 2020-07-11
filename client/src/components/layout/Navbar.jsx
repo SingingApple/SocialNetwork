@@ -22,6 +22,9 @@ export const Navbar = () => {
       <li>
         <NavLink to="/dashboard">Dashboard</NavLink>
       </li>
+      <li>
+        <NavLink to="/posts">Posts</NavLink>
+      </li>
     </ul>
   );
   const guestLinks = (
