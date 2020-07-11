@@ -4,6 +4,10 @@ import {
   UPDATE_LIKES,
   DELETE_POST,
   ADD_POST,
+  GET_POST,
+  UPDATE_COMMENTS,
+  ADD_COMMENT,
+  DELETE_COMMENT,
 } from "../actions/types";
 
 const initialState = {
@@ -25,7 +29,7 @@ const postReducer = (state = initialState, action) => {
     case ADD_POST:
       return {
         ...state,
-        posts: [...state.posts, payload],
+        posts: [payload, ...state.posts],
         loading: false,
       };
     case POST_ERROR:
@@ -44,12 +48,35 @@ const postReducer = (state = initialState, action) => {
         ),
         loading: false,
       };
+    case GET_POST:
+      return {
+        ...state,
+        post: payload,
+        loading: false,
+      };
 
     case DELETE_POST:
       return {
         ...state,
-        posts: state.posts.filter((post) => post.id !== payload),
+        posts: state.posts.filter((post) => post._id !== payload),
         loading: false,
+      };
+    case ADD_COMMENT:
+      return {
+        ...state,
+        loading: false,
+        post: { ...state.post, comments: payload },
+      };
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        loading: false,
+        post: {
+          ...state.post,
+          comments: state.post.comments.filter(
+            (comment) => comment._id !== payload
+          ),
+        },
       };
     default:
       return {
